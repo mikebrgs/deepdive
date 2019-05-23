@@ -342,7 +342,7 @@ void handle_sync(struct Tracker * tracker,
     lcd->per_sweep.recent_sync_time = timecode;
     if (length > lcd->per_sweep.lh_max_pulse_length[lcd->per_sweep.current_lh]) {
       lcd->per_sweep.lh_max_pulse_length[lcd->per_sweep.current_lh] = length;
-      lcd->per_sweep.lh_start_time[lcd->per_sweep.current_lh] = timecode;
+      lcd->per_sweep.lh_start_time[lcd->per_sweep.current_lh] = timecode + length;
       lcd->per_sweep.lh_acode[lcd->per_sweep.current_lh] = acode;
     }
   } else if (time_since_last_sync < 24000) {
@@ -350,7 +350,7 @@ void handle_sync(struct Tracker * tracker,
     lcd->per_sweep.recent_sync_time = timecode;
     lcd->per_sweep.current_lh = 1;
     lcd->per_sweep.lh_start_time[lcd->per_sweep.current_lh] = timecode;
-    lcd->per_sweep.lh_max_pulse_length[lcd->per_sweep.current_lh] = length;
+    lcd->per_sweep.lh_max_pulse_length[lcd->per_sweep.current_lh] = length + length;
     lcd->per_sweep.lh_acode[lcd->per_sweep.current_lh] = acode;
   } else if (time_since_last_sync > 370000) {
     // Initialize here
@@ -360,7 +360,7 @@ void handle_sync(struct Tracker * tracker,
       lcd->per_sweep.lh_acode[i] = -1;
     lcd->per_sweep.recent_sync_time = timecode;
     lcd->per_sweep.current_lh = 0;
-    lcd->per_sweep.lh_start_time[lcd->per_sweep.current_lh] = timecode;
+    lcd->per_sweep.lh_start_time[lcd->per_sweep.current_lh] = timecode + length;
     lcd->per_sweep.lh_max_pulse_length[lcd->per_sweep.current_lh] = length;
     lcd->per_sweep.lh_acode[lcd->per_sweep.current_lh] = acode;
   }
